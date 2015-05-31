@@ -7,6 +7,9 @@ import android.util.Log;
 
 import java.io.StringWriter;
 
+import ews.message.FindItemRequest;
+import ews.transport.RequestHandler;
+
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
@@ -22,5 +25,14 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
         writer.write("test");
         Log.d("test", writer.getBuffer().toString());
+    }
+
+    @SmallTest
+    public void testGetFolder(){
+        RequestHandler handler = new RequestHandler();
+        FindItemRequest request = new FindItemRequest();
+
+        handler.sendRequest(request);
+
     }
 }

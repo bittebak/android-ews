@@ -1,4 +1,4 @@
-package ews;
+package ews.message;
 
 import android.text.method.DateTimeKeyListener;
 import android.util.Xml;
@@ -15,8 +15,8 @@ import ews.xml.NameSpace;
 /**
  * Created by marcprive on 05-25-15.
  */
-public class FindItemRequest {
-    private final String RequestServerVersion = "Exchange2010_SP2";
+public class FindItemRequest extends EwsRequest{
+
     private final String Traversal = "Shallow";
     private final String BaseShape = "AllProperties";
     private String folderId = null;
@@ -24,23 +24,10 @@ public class FindItemRequest {
     private Date endDate;
     private String changeKey = null;
 
-    public void write(Writer writer) {
-        XmlSerializer serializer = Xml.newSerializer();
-
+    @Override
+    public void setBody() {
         try {
-            serializer.setOutput(writer);
-
             //Move Body and Header to base class
-            serializer.startTag(NameSpaces.EwsSoapNamespace, "Envelope");
-            serializer.startTag(NameSpaces.EwsSoapNamespace, "Header");
-            serializer.startTag(NameSpaces.EwsTypesNamespace, "RequestServerVersion");
-            serializer.attribute("", "Version", "Exchange2010_SP2");
-            serializer.endTag(NameSpaces.EwsTypesNamespace, "RequestServerVersion");
-            serializer.endTag(NameSpaces.EwsSoapNamespace, "Header");
-
-
-            serializer.startTag(NameSpaces.EwsSoapNamespace, "Body");
-
 //          <m:FindItem Traversal="Shallow">
             serializer.startTag(NameSpaces.EwsMessagesNamespace, "FindItem");
             serializer.attribute("", "Traversal", "Shallow");
@@ -68,9 +55,7 @@ public class FindItemRequest {
 //          </m:FindItem>
             serializer.endTag(NameSpaces.EwsMessagesNamespace, "FindItem");
 
-            serializer.endTag(NameSpaces.EwsSoapNamespace, "Body");
-            serializer.endTag(NameSpaces.EwsSoapNamespace, "Envelope");
-            serializer.flush();
+
         } catch (IOException ignored) {
         }
 
