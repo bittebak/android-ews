@@ -28,7 +28,7 @@ public class FindItemRequest extends EwsRequest{
     public void setBody() {
         try {
             //Move Body and Header to base class
-//          <m:FindItem Traversal="Shallow">
+//          <m:FindItemOperation Traversal="Shallow">
             serializer.startTag(NameSpaces.EwsMessagesNamespace, "FindItem");
             serializer.attribute("", "Traversal", "Shallow");
             //<m:ItemShape>
@@ -52,7 +52,7 @@ public class FindItemRequest extends EwsRequest{
             serializer.endTag(NameSpaces.EwsTypesNamespace, "FolderId");
 //          </m:ParentFolderIds>
             serializer.endTag(NameSpaces.EwsMessagesNamespace, "ParentFolderIds");
-//          </m:FindItem>
+//          </m:FindItemOperation>
             serializer.endTag(NameSpaces.EwsMessagesNamespace, "FindItem");
 
 

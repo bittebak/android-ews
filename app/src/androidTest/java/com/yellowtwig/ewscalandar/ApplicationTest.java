@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import ews.message.FindItemRequest;
+import ews.message.FindItemResponse;
+import ews.operation.FindItemOperation;
 import ews.transport.RequestHandler;
 
 /**
@@ -45,6 +47,20 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
         try {
             handler.postRequest(request);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @SmallTest
+    public void testGetFolderResponse(){
+        RequestHandler handler = new RequestHandler();
+        FindItemOperation operation = new FindItemOperation(handler);
+
+        try {
+            FindItemResponse response = operation.execute();
 
         } catch (IOException e) {
             e.printStackTrace();

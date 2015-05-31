@@ -27,12 +27,5 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         Log.d("test", writer.getBuffer().toString());
     }
 
-    @SmallTest
-    public void testGetFolder(){
-        RequestHandler handler = new RequestHandler();
-        FindItemRequest request = new FindItemRequest();
 
-        handler.sendRequest(request);
-
-    }
 }
