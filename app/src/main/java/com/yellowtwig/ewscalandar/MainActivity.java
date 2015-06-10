@@ -70,9 +70,6 @@ public class MainActivity extends Activity {
 
     private void initList(){
 
-        myStringArray.add("first");
-        myStringArray.add("second");
-
        myAdapter =
                 new ArrayAdapter<String>(
                                         this,
@@ -91,7 +88,9 @@ public class MainActivity extends Activity {
         try {
             FindItemResponse response = operation.execute();
             for (CalendarItem calendarItem : response.getItems()) {
-                myStringArray.add(calendarItem.getSubject());
+                String listItem = calendarItem.getSubject() + " : " + calendarItem.getStart();
+                listItem += " : " + calendarItem.getLocation();
+                myStringArray.add(listItem);
 
             }
 
@@ -104,7 +103,6 @@ public class MainActivity extends Activity {
     public void sendMessage(View view) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        myStringArray.add("clicked2");
         getCalendarItems();
         myAdapter.notifyDataSetChanged();
     }
