@@ -14,6 +14,8 @@ import java.net.HttpURLConnection;
 
 import java.net.URL;
 import java.net.URLConnection;
+
+import ews.config.ConnectionConfig;
 import ews.message.EwsRequest;
 
 /**
@@ -21,24 +23,34 @@ import ews.message.EwsRequest;
  */
 public class RequestHandler {
 
-    private static final String HOSTNAME = "https://webmail.stater.com/ews/Exchange.asmx";
 
-    public RequestHandler() {
+    private ConnectionConfig config;
 
+    public RequestHandler( ConnectionConfig config) {
+
+        this.config = config;
     }
 
 
     public InputStream postRequest(EwsRequest request) throws IOException {
         String responseString = "";
         String outputString = "";
-        String wsURL = "https://webmail.stater.com/ews/Exchange.asmx";
+
+        String wsURL = config.getServiceURL();
         URL url = new URL(wsURL);
         URLConnection connection = url.openConnection();
         HttpURLConnection httpConn = (HttpURLConnection)connection;
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
 
-        //From NetBeans project mavenproject1
-        Authenticator.setDefault(new ExchangeNTLMAuthenticator("europe","sogeelenm","ZesKeer7"));
+        String domain = config.getDomain();
+        String userName = config.getUserName();
+        String password = config.getPassword();
+
+        Authenticator.setDefault(new ExchangeNTLMAuthenticator(
+                domain ,
+                userName,
+                password));
+
 
         OutputStreamWriter writer = new OutputStreamWriter(bout);
         request.write(writer);
@@ -47,16 +59,24 @@ public class RequestHandler {
         httpConn.setRequestProperty("Content-Length",
                 String.valueOf(bout.size()));
         httpConn.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
-        //httpConn.setRequestProperty("SOAPAction", SOAPAction);
         httpConn.setRequestMethod("POST");
         httpConn.setDoOutput(true);
         httpConn.setDoInput(true);
         OutputStream out = httpConn.getOutputStream();
+
         //Write the content of the request to the outputstream of the HTTP Connection.
         out.write(bout.toByteArray());
         out.close();
+        InputStream input = null;
+        try {
+            input = httpConn.getInputStream();
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
 
-        return httpConn.getInputStream();
+        }
+
+        return input;
     }
 
 }

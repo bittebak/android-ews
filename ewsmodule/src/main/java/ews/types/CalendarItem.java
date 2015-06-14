@@ -13,6 +13,16 @@ public class CalendarItem {
     private String organizer;
     private String subject;
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    private String location;
+
     public String getItemId() {
         return itemId;
     }

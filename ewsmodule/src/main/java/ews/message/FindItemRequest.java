@@ -1,5 +1,6 @@
 package ews.message;
 
+import android.text.format.DateUtils;
 import android.text.method.DateTimeKeyListener;
 import android.util.Xml;
 
@@ -7,6 +8,8 @@ import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import ews.microsoft.NameSpaces;
@@ -39,10 +42,19 @@ public class FindItemRequest extends EwsRequest{
             serializer.endTag(NameSpaces.EwsTypesNamespace, "BaseShape");
 //          </m:ItemShape>
             serializer.endTag(NameSpaces.EwsMessagesNamespace, "ItemShape");
-//            <m:CalendarView StartDate="2015-04-01T10:00:00Z" EndDate="2015-05-30T11:00:00Z"/>
+
+//          <m:CalendarView StartDate="2015-04-01T10:00:00Z" EndDate="2015-05-30T11:00:00Z"/>
             serializer.startTag(NameSpaces.EwsMessagesNamespace, "CalendarView");
-            serializer.attribute("", "StartDate", "2015-04-01T10:00:00Z");
-            serializer.attribute("", "EndDate", "2015-05-30T11:00:00Z");
+            //serializer.attribute("", "StartDate", "2015-04-01T10:00:00Z");
+            String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
+            serializer.attribute("", "StartDate",currentDateandTime );
+            //serializer.attribute("", "EndDate", "2015-05-30T11:00:00Z");
+            Date twoWeeksFromNow = addDays(new Date(), 14);
+
+
+            String twoWeeksString = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(twoWeeksFromNow);
+            serializer.attribute("", "EndDate", twoWeeksString);
+
             serializer.endTag(NameSpaces.EwsMessagesNamespace, "CalendarView");
 //          <m:ParentFolderIds>
             serializer.startTag(NameSpaces.EwsMessagesNamespace, "ParentFolderIds");
@@ -59,6 +71,13 @@ public class FindItemRequest extends EwsRequest{
         } catch (IOException ignored) {
         }
 
+    }
+
+    private Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 
 
