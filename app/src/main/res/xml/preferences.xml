@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="username"
+        android:title="username"
+        android:summary="username"
+        android:defaultValue="vul gebruiker in" />
+    />
+    <EditTextPreference
+        android:password="true"
+        android:key="password"
+        android:title="password"
+        android:summary="password"
+        android:defaultValue="password" />
+    />
+    <EditTextPreference
+        android:key="domain"
+        android:title="domein"
+        android:summary="URL van de EWS host"
+        android:defaultValue="europe" />
+    />
+
+    <EditTextPreference
+
+        android:key="URL"
+        android:title="URL"
+        android:summary="URL van de EWS host"
+        android:defaultValue="https://webmail.stater.com/ews/Exchange.asmx" />
+    />
+
+
+</PreferenceScreen>

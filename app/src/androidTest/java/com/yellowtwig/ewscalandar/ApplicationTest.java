@@ -1,6 +1,8 @@
 package com.yellowtwig.ewscalandar;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.Log;
@@ -8,6 +10,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.StringWriter;
 
+import ews.config.ConnectionConfig;
 import ews.message.FindItemRequest;
 import ews.message.FindItemResponse;
 import ews.operation.FindItemOperation;
@@ -17,6 +20,8 @@ import ews.transport.RequestHandler;
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
 public class ApplicationTest extends ApplicationTestCase<Application> {
+
+    private static final String HOSTNAME = "https://webmail.stater.com/ews/Exchange.asmx";
     public ApplicationTest() {
         super(Application.class);
     }
@@ -42,8 +47,10 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     @SmallTest
     public void testGetFolder(){
-        RequestHandler handler = new RequestHandler();
+
+        RequestHandler handler = new RequestHandler(loadPreferences());
         FindItemRequest request = new FindItemRequest();
+
 
         try {
             handler.postRequest(request);
@@ -56,7 +63,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     @SmallTest
     public void testGetFolderResponse(){
-        RequestHandler handler = new RequestHandler();
+
+        RequestHandler handler = new RequestHandler(loadPreferences());
         FindItemOperation operation = new FindItemOperation(handler);
 
         try {
@@ -66,5 +74,15 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
             e.printStackTrace();
         }
 
+    }
+
+    private ConnectionConfig loadPreferences(){
+        ConnectionConfig config = new ConnectionConfig();
+
+        config.setDomain("europe");
+        config.setUserName("sogeelenm");
+        config.setPassword("Hestia1995");
+        config.setServiceURL(HOSTNAME);
+        return config;
     }
 }
