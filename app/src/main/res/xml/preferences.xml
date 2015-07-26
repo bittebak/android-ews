@@ -25,7 +25,7 @@
         android:key="URL"
         android:title="URL"
         android:summary="URL van de EWS host"
-        android:defaultValue="https://webmail.stater.com/ews/Exchange.asmx" />
+        android:defaultValue="https://yourhost/ews/Exchange.asmx" />
     />
 
 
