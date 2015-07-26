@@ -1,1 +1,1 @@
-include ':app', ':ewsmodule'
+include ':app', ':ewsmodule', ':utils'

@@ -21,7 +21,7 @@ import ews.transport.RequestHandler;
  */
 public class ApplicationTest extends ApplicationTestCase<Application> {
 
-    private static final String HOSTNAME = "https://webmail.stater.com/ews/Exchange.asmx";
+    private static final String HOSTNAME = "https://yourhost/ews/Exchange.asmx";
     public ApplicationTest() {
         super(Application.class);
     }
@@ -79,9 +79,9 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     private ConnectionConfig loadPreferences(){
         ConnectionConfig config = new ConnectionConfig();
 
-        config.setDomain("europe");
-        config.setUserName("sogeelenm");
-        config.setPassword("Hestia1995");
+        config.setDomain("domain");
+        config.setUserName("username");
+        config.setPassword("password");
         config.setServiceURL(HOSTNAME);
         return config;
     }
